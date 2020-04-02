@@ -8,7 +8,7 @@ import pygame
 
 
 class MusicPlayer:
-    def __init__(self, frame):
+    def __init__(self, frame: Tk, playlist_dir: str):
         self.frame = frame
         self.frame.title("Music Player")
         self.frame.geometry("1000x200")
@@ -23,10 +23,9 @@ class MusicPlayer:
         self._draw_playlist_frame()
         self._draw_control_frame()
 
-        os.chdir("/Users/shanewhiteman/Desktop/playlist")
-
-        # Fetching Songs
+        os.chdir(playlist_dir)
         songtracks = os.listdir()
+
         # Songs into Playlist
         for track in songtracks:
             self.playlist.insert(END, track)
@@ -100,8 +99,15 @@ class MusicPlayer:
 
 
 def main():
+
+    if len(sys.argv) < 2:
+        print("Usage: Vibelist <playlist directory>")
+        sys.exit(1)
+
+    playlist = sys.argv[1]
+
     frame = Tk()
-    MusicPlayer(frame)
+    MusicPlayer(frame, playlist)
     frame.mainloop()
 
 
